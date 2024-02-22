@@ -1,6 +1,4 @@
-//
-// Created by Anderson on 21/02/2024.
-//
+//funcoesMenu.h
 
 #ifndef PROJETO2_FUNCOESMENU_H
 #define PROJETO2_FUNCOESMENU_H

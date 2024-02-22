@@ -23,3 +23,13 @@
 10	129	7302752353662373	CMakeFiles/Projeto2.dir/funcoesClientes.c.obj	3a8d285655b563f2
 14	135	7302752353727509	CMakeFiles/Projeto2.dir/funcoesReservas.c.obj	494d6de9c681b2a5
 135	210	7302752354439173	Projeto2.exe	79bd4e9973946320
+3	247	7303333656092994	CMakeFiles/Projeto2.dir/main.c.obj	541c2dc590dd3805
+19	247	7303333656102997	CMakeFiles/Projeto2.dir/funcoesMenu.c.obj	eb5ae027ec24d148
+10	248	7303333656113002	CMakeFiles/Projeto2.dir/funcoesQuartos.c.obj	f2910c91118ba119
+15	251	7303333656153034	CMakeFiles/Projeto2.dir/funcoesReservas.c.obj	494d6de9c681b2a5
+251	490	7303333658517171	Projeto2.exe	79bd4e9973946320
+2	98	7303336285414099	CMakeFiles/Projeto2.dir/main.c.obj	541c2dc590dd3805
+10	102	7303336285464147	CMakeFiles/Projeto2.dir/funcoesMenu.c.obj	eb5ae027ec24d148
+6	114	7303336285584305	CMakeFiles/Projeto2.dir/funcoesQuartos.c.obj	f2910c91118ba119
+14	135	7303336285794070	CMakeFiles/Projeto2.dir/funcoesReservas.c.obj	494d6de9c681b2a5
+135	210	7303336286514069	Projeto2.exe	79bd4e9973946320

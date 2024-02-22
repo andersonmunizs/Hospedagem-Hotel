@@ -112,12 +112,43 @@ void alterarReserva() {
     }
 }
 
-void excluirReserva() {
-    int id;
-    int posicao = -1;
+void cancelarReservaPorId(int id);
+void cancelarReservaPorClienteEData(const char *cpf, int dia_checkin, int mes_checkin, int ano_checkin);
 
-    printf("Digite o ID da reserva que deseja excluir: ");
-    scanf("%d", &id);
+void excluirReserva() {
+    int opcao;
+    printf("Como deseja encontrar a reserva a ser cancelada?\n");
+    printf("1. Utilizando o código da reserva\n");
+    printf("2. Utilizando o CPF do cliente e a data de check-in\n");
+    printf("Escolha uma opção: ");
+    scanf("%d", &opcao);
+
+    switch (opcao) {
+        case 1: {
+            int id;
+            printf("Digite o ID da reserva que deseja excluir: ");
+            scanf("%d", &id);
+            cancelarReservaPorId(id);
+            break;
+        }
+        case 2: {
+            char cpf[14];
+            int dia_checkin, mes_checkin, ano_checkin;
+            printf("Digite o CPF do cliente: ");
+            scanf("%13s", cpf);
+            printf("Digite a data de Check-in (dd mm aaaa): ");
+            scanf("%d %d %d", &dia_checkin, &mes_checkin, &ano_checkin);
+            cancelarReservaPorClienteEData(cpf, dia_checkin, mes_checkin, ano_checkin);
+            break;
+        }
+        default:
+            printf("Opção inválida.\n");
+            break;
+    }
+}
+
+void cancelarReservaPorId(int id) {
+    int posicao = -1;
 
     // Encontra a posição da reserva com o ID especificado
     for (int i = 0; i < quantidade_reservas; i++) {
@@ -136,9 +167,38 @@ void excluirReserva() {
         quantidade_reservas--;
 
         salvarReservas();
-        printf("Reserva excluída com sucesso.\n");
+        printf("Reserva com o ID %d excluída com sucesso.\n", id);
     } else {
         printf("Reserva com o ID %d não encontrada.\n", id);
+    }
+}
+
+void cancelarReservaPorClienteEData(const char *cpf, int dia_checkin, int mes_checkin, int ano_checkin) {
+    int posicao = -1;
+
+    // Encontra a posição da reserva com o CPF do cliente e a data de check-in especificados
+    for (int i = 0; i < quantidade_reservas; i++) {
+        if (strcmp(reservas[i].cpf_cliente, cpf) == 0 &&
+            reservas[i].dia_checkin == dia_checkin &&
+            reservas[i].mes_checkin == mes_checkin &&
+            reservas[i].ano_checkin == ano_checkin) {
+            posicao = i;
+            break;
+        }
+    }
+
+    // Se a reserva for encontrada
+    if (posicao != -1) {
+        // Move os elementos subsequentes para o índice atual
+        for (int i = posicao; i < quantidade_reservas - 1; i++) {
+            reservas[i] = reservas[i + 1];
+        }
+        quantidade_reservas--;
+
+        salvarReservas();
+        printf("Reserva do cliente com CPF %s para a data de check-in %02d/%02d/%04d excluída com sucesso.\n", cpf, dia_checkin, mes_checkin, ano_checkin);
+    } else {
+        printf("Reserva do cliente com CPF %s para a data de check-in %02d/%02d/%04d não encontrada.\n", cpf, dia_checkin, mes_checkin, ano_checkin);
     }
 }
 
