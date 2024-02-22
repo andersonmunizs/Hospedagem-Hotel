@@ -1,0 +1,25 @@
+# ninja log v5
+2	74	7302727125966633	CMakeFiles/Projeto2.dir/main.c.obj	541c2dc590dd3805
+7	124	7297637701315705	CMakeFiles/Projeto2.dir/funcoesQuartos.c.obj	f2910c91118ba119
+76	156	7302727126742080	Projeto2.exe	5bd96d4767131a6f
+9	112	7302723478460438	CMakeFiles/Projeto2.dir/funcoesClientes.c.obj	3a8d285655b563f2
+7	76	7302727125985887	CMakeFiles/Projeto2.dir/funcoesMenu.c.obj	eb5ae027ec24d148
+2	105	7302735263793853	CMakeFiles/Projeto2.dir/main.c.obj	541c2dc590dd3805
+11	115	7302735263894184	CMakeFiles/Projeto2.dir/funcoesMenu.c.obj	eb5ae027ec24d148
+7	123	7302735263984272	CMakeFiles/Projeto2.dir/funcoesReservas.c.obj	494d6de9c681b2a5
+123	204	7302735264753260	Projeto2.exe	79bd4e9973946320
+1	84	7302739353766871	CMakeFiles/Projeto2.dir/main.c.obj	541c2dc590dd3805
+6	96	7302739353887940	CMakeFiles/Projeto2.dir/funcoesMenu.c.obj	eb5ae027ec24d148
+10	106	7302739353999148	CMakeFiles/Projeto2.dir/funcoesReservas.c.obj	494d6de9c681b2a5
+106	185	7302739354748337	Projeto2.exe	79bd4e9973946320
+2	93	7302746078096807	CMakeFiles/Projeto2.dir/main.c.obj	541c2dc590dd3805
+15	102	7302746078198599	CMakeFiles/Projeto2.dir/funcoesMenu.c.obj	eb5ae027ec24d148
+6	105	7302746078238658	CMakeFiles/Projeto2.dir/funcoesQuartos.c.obj	f2910c91118ba119
+10	122	7302746078409236	CMakeFiles/Projeto2.dir/funcoesReservas.c.obj	494d6de9c681b2a5
+122	201	7302746079159277	Projeto2.exe	79bd4e9973946320
+2	97	7302752353326794	CMakeFiles/Projeto2.dir/main.c.obj	541c2dc590dd3805
+6	113	7302752353487088	CMakeFiles/Projeto2.dir/funcoesQuartos.c.obj	f2910c91118ba119
+19	118	7302752353547167	CMakeFiles/Projeto2.dir/funcoesMenu.c.obj	eb5ae027ec24d148
+10	129	7302752353662373	CMakeFiles/Projeto2.dir/funcoesClientes.c.obj	3a8d285655b563f2
+14	135	7302752353727509	CMakeFiles/Projeto2.dir/funcoesReservas.c.obj	494d6de9c681b2a5
+135	210	7302752354439173	Projeto2.exe	79bd4e9973946320
