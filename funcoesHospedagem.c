@@ -18,13 +18,13 @@ void iniciarHospedagem() {
     // Se a reserva for encontrada
     if (posicao != -1) {
         printf("Hospedagem iniciada com sucesso para o cliente com CPF %s.\n", reservas[posicao].cpf_cliente);
-        // Aqui você pode adicionar a lógica para registrar a hospedagem em andamento, se necessário
+
     } else {
         printf("Reserva com o ID %d não encontrada.\n", id_reserva);
     }
 }
 
 void encerrarHospedagem() {
-    // Aqui você pode adicionar a lógica para encerrar uma hospedagem em andamento, se necessário
+
     printf("Hospedagem encerrada com sucesso.\n");
 }
