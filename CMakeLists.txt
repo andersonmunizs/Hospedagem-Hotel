@@ -8,4 +8,6 @@ add_executable(Projeto2 main.c
         funcoesClientes.c
         funcoesMenu.c
         funcoesReservas.h
-        funcoesReservas.c)
+        funcoesReservas.c
+        funcoesHospedagem.h
+        funcoesHospedagem.c)

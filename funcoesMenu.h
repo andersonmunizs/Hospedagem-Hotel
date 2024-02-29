@@ -6,5 +6,6 @@
 void menuQuartos();
 void menuClientes();
 void menuReservas();
+void menuHospedagem();
 
 #endif //PROJETO2_FUNCOESMENU_H

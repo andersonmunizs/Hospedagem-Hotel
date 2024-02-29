@@ -134,3 +134,7 @@ void excluirQuarto() {
         printf("Quarto com o ID %d não encontrado.\n", id);
     }
 }
+
+void atualizarDisponibilidadeQuarto(int numero_quarto, int disponibilidade) {
+    // Implemente a lógica para atualizar a disponibilidade do quarto aqui
+}

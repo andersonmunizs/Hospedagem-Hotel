@@ -3,9 +3,13 @@
 #include "funcoesQuartos.h"
 #include "funcoesClientes.h"
 #include "funcoesReservas.h"
+#include "funcoesHospedagem.h"
 #include "funcoesMenu.h"
 
-//ex1,2,3 = menu reserva, 4 = menu reservas
+extern Reserva reservas[MAX_RESERVAS];
+extern int quantidade_reservas;
+
+
 int main() {
     carregarQuartos(); // Carrega os quartos do arquivo CSV
     carregarClientes(); // Carrega os clientes do arquivo CSV
@@ -28,6 +32,9 @@ int main() {
                 break;
             case 2:
                 menuClientes();
+                break;
+            case 3:
+                menuHospedagem();
                 break;
             case 4:
                 menuQuartos();

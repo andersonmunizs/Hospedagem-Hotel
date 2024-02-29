@@ -3,6 +3,7 @@
 #include "funcoesClientes.h"
 #include "funcoesQuartos.h"
 #include "funcoesReservas.h"
+#include "funcoesHospedagem.h"
 
 void menuQuartos() {
     int opcao;
@@ -108,6 +109,32 @@ void menuReservas() {
                 scanf("%d %d %d", &dia_checkout, &mes_checkout, &ano_checkout);
                 verificarDisponibilidadeQuarto(tipo_quarto, dia_checkin, mes_checkin, ano_checkin, dia_checkout, mes_checkout, ano_checkout);
             }
+                break;
+            case 9:
+                printf("Voltando ao Menu Principal...\n");
+                break;
+            default:
+                printf("Opção inválida. Por favor, escolha uma opção válida.\n");
+        }
+    } while (opcao != 9);
+}
+
+void menuHospedagem() {
+    int opcao;
+    do {
+        printf("\nMenu Hospedagem\n");
+        printf("1. Iniciar Hospedagem\n");
+        printf("2. Encerrar Hospedagem\n");
+        printf("9. Voltar ao Menu Principal\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcao);
+
+        switch(opcao) {
+            case 1:
+                iniciarHospedagem();
+                break;
+            case 2:
+                encerrarHospedagem();
                 break;
             case 9:
                 printf("Voltando ao Menu Principal...\n");
