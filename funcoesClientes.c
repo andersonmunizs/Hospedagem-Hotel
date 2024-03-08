@@ -132,7 +132,6 @@ void excluirCliente() {
 
     // Se o cliente for encontrado
     if (posicao != -1) {
-        // Move os elementos subsequentes para o índice atual
         for (int i = posicao; i < quantidade_clientes - 1; i++) {
             clientes[i] = clientes[i + 1];
         }

@@ -3,15 +3,15 @@
 #define FUNCOES_CLIENTES_H
 
 typedef struct {
-    char cpf[14]; // String de 13 caracteres + terminador nulo
-    char nome[51]; // String de 50 caracteres + terminador nulo
+    char cpf[14];
+    char nome[51];
     int dia_nascimento;
     int mes_nascimento;
     int ano_nascimento;
     int idade;
-    char endereco[101]; // String de 100 caracteres + terminador nulo
-    char cidade[101]; // String de 100 caracteres + terminador nulo
-    char estado[3]; // String de 2 caracteres + terminador nulo
+    char endereco[101];
+    char cidade[101];
+    char estado[3];
 } Cliente;
 
 void cadastrarCliente();

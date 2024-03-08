@@ -77,7 +77,6 @@ void alterarQuarto() {
     printf("Digite o ID do quarto que deseja alterar: ");
     scanf("%d", &id);
 
-    // Encontra a posição do quarto com o ID especificado
     for (int i = 0; i < quantidade_quartos; i++) {
         if (quartos[i].id_quarto == id) {
             posicao = i;
@@ -85,7 +84,7 @@ void alterarQuarto() {
         }
     }
 
-    // Se o quarto for encontrado
+    //Se o quarto for encontrado
     if (posicao != -1) {
         printf("Novo número de camas de solteiro: ");
         scanf("%d", &quartos[posicao].camas_solteiro);
@@ -112,7 +111,7 @@ void excluirQuarto() {
     printf("Digite o ID do quarto que deseja excluir: ");
     scanf("%d", &id);
 
-    // Encontra a posição do quarto com o ID especificado
+
     for (int i = 0; i < quantidade_quartos; i++) {
         if (quartos[i].id_quarto == id) {
             posicao = i;
@@ -120,9 +119,8 @@ void excluirQuarto() {
         }
     }
 
-    // Se o quarto for encontrado
+
     if (posicao != -1) {
-        // Move os elementos subsequentes para o índice atual
         for (int i = posicao; i < quantidade_quartos - 1; i++) {
             quartos[i] = quartos[i + 1];
         }
@@ -133,8 +131,4 @@ void excluirQuarto() {
     } else {
         printf("Quarto com o ID %d não encontrado.\n", id);
     }
-}
-
-void atualizarDisponibilidadeQuarto(int numero_quarto, int disponibilidade) {
-    // Implemente a lógica para atualizar a disponibilidade do quarto aqui
 }

@@ -11,9 +11,9 @@ extern int quantidade_reservas;
 
 
 int main() {
-    carregarQuartos(); // Carrega os quartos do arquivo CSV
-    carregarClientes(); // Carrega os clientes do arquivo CSV
-    carregarReservas(); // Carrega as reservas do arquivo CSV
+    carregarQuartos(); //Carrega os quartos do arquivo CSV
+    carregarClientes(); //Carrega os clientes do arquivo CSV
+    carregarReservas(); //Carrega as reservas do arquivo CSV
 
     int opcao;
     do {

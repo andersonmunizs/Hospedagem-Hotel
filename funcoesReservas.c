@@ -35,7 +35,7 @@ void carregarReservas() {
     }
 
     char linha[256];
-    fgets(linha, sizeof(linha), arquivo); // Ignorar o cabeçalho
+    fgets(linha, sizeof(linha), arquivo); //Ignorar o cabeçalho
     while (fgets(linha, sizeof(linha), arquivo)) {
         sscanf(linha, "%d, %13[^,], %d %d %d, %d %d %d, %9[^,], %d",
                &reservas[quantidade_reservas].id_reserva, reservas[quantidade_reservas].cpf_cliente,
@@ -60,9 +60,9 @@ void cadastrarReserva() {
     scanf("%d", &nova_reserva.id_reserva);
     printf("CPF do cliente (formato xxx.xxx.xxx-xx): ");
     scanf("%13s", nova_reserva.cpf_cliente);
-    printf("Data de Check-in (dd mm aaaa): ");
-    scanf("%d %d %d", &nova_reserva.dia_checkin, &nova_reserva.mes_checkin, &nova_reserva.ano_checkin);
-    printf("Data de Check-out (dd mm aaaa): ");
+    printf("Data de Check-in (dd/mm/aaaa): ");
+    scanf("%d -> %d -> %d", &nova_reserva.dia_checkin, &nova_reserva.mes_checkin, &nova_reserva.ano_checkin);
+    printf("Data de Check-out (dd/mm/aaaa): ");
     scanf("%d %d %d", &nova_reserva.dia_checkout, &nova_reserva.mes_checkout, &nova_reserva.ano_checkout);
     printf("Tipo de quarto (Single, Duplo, Triplo): ");
     scanf("%9s", nova_reserva.tipo_quarto);
@@ -90,7 +90,7 @@ void alterarReserva() {
         }
     }
 
-    // Se a reserva for encontrada
+    //Se a reserva for encontrada
     if (posicao != -1) {
         printf("Novo CPF do cliente (formato xxx.xxx.xxx-xx): ");
         scanf("%13s", reservas[posicao].cpf_cliente);
@@ -150,7 +150,6 @@ void excluirReserva() {
 void cancelarReservaPorId(int id) {
     int posicao = -1;
 
-    // Encontra a posição da reserva com o ID especificado
     for (int i = 0; i < quantidade_reservas; i++) {
         if (reservas[i].id_reserva == id) {
             posicao = i;
@@ -158,9 +157,8 @@ void cancelarReservaPorId(int id) {
         }
     }
 
-    // Se a reserva for encontrada
+    //Se a reserva for encontrada
     if (posicao != -1) {
-        // Move os elementos subsequentes para o índice atual
         for (int i = posicao; i < quantidade_reservas - 1; i++) {
             reservas[i] = reservas[i + 1];
         }
@@ -189,7 +187,6 @@ void cancelarReservaPorClienteEData(const char *cpf, int dia_checkin, int mes_ch
 
     // Se a reserva for encontrada
     if (posicao != -1) {
-        // Move os elementos subsequentes para o índice atual
         for (int i = posicao; i < quantidade_reservas - 1; i++) {
             reservas[i] = reservas[i + 1];
         }
@@ -244,4 +241,4 @@ void verificarDisponibilidadeQuarto(const char *tipo_quarto, int dia_checkin, in
     }
 }
 
-int proximoCodigoReserva = 1; // Variável para controlar o próximo código de reserva
+int proximoCodigoReserva = 1;
