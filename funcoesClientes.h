@@ -2,12 +2,12 @@
 #ifndef FUNCOES_CLIENTES_H
 #define FUNCOES_CLIENTES_H
 
+#include "tempo.h"
+
 typedef struct {
     char cpf[14];
     char nome[51];
-    int dia_nascimento;
-    int mes_nascimento;
-    int ano_nascimento;
+    DATA dataNascimento;
     int idade;
     char endereco[101];
     char cidade[101];

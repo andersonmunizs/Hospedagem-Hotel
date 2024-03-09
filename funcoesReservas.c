@@ -57,17 +57,17 @@ void cadastrarReserva() {
 
     Reserva nova_reserva;
     printf("ID da reserva: ");
-    scanf("%d", &nova_reserva.id_reserva);
+    scanf(" %d", &nova_reserva.id_reserva);
     printf("CPF do cliente (formato xxx.xxx.xxx-xx): ");
-    scanf("%13s", nova_reserva.cpf_cliente);
+    scanf(" %[^\n]s", nova_reserva.cpf_cliente);
     printf("Data de Check-in (dd/mm/aaaa): ");
-    scanf("%d -> %d -> %d", &nova_reserva.dia_checkin, &nova_reserva.mes_checkin, &nova_reserva.ano_checkin);
+    scanf(" %d -> %d -> %d", &nova_reserva.dia_checkin, &nova_reserva.mes_checkin, &nova_reserva.ano_checkin);
     printf("Data de Check-out (dd/mm/aaaa): ");
-    scanf("%d %d %d", &nova_reserva.dia_checkout, &nova_reserva.mes_checkout, &nova_reserva.ano_checkout);
+    scanf( " %d %d %d", &nova_reserva.dia_checkout, &nova_reserva.mes_checkout, &nova_reserva.ano_checkout);
     printf("Tipo de quarto (Single, Duplo, Triplo): ");
-    scanf("%9s", nova_reserva.tipo_quarto);
+    scanf(" %[^\n]s", nova_reserva.tipo_quarto);
     printf("ID do quarto: ");
-    scanf("%d", &nova_reserva.id_quarto);
+    scanf(" %d", &nova_reserva.id_quarto);
 
     reservas[quantidade_reservas] = nova_reserva;
     quantidade_reservas++;
@@ -93,7 +93,7 @@ void alterarReserva() {
     //Se a reserva for encontrada
     if (posicao != -1) {
         printf("Novo CPF do cliente (formato xxx.xxx.xxx-xx): ");
-        scanf("%13s", reservas[posicao].cpf_cliente);
+        scanf(" %[^\n]s", reservas[posicao].cpf_cliente);
         printf("Nova data de Check-in (dd mm aaaa): ");
         scanf("%d %d %d", &reservas[posicao].dia_checkin, &reservas[posicao].mes_checkin,
               &reservas[posicao].ano_checkin);
@@ -101,7 +101,7 @@ void alterarReserva() {
         scanf("%d %d %d", &reservas[posicao].dia_checkout, &reservas[posicao].mes_checkout,
               &reservas[posicao].ano_checkout);
         printf("Novo tipo de quarto (Single, Duplo, Triplo): ");
-        scanf("%9s", reservas[posicao].tipo_quarto);
+        scanf(" %[^\n]s", reservas[posicao].tipo_quarto);
         printf("Novo ID do quarto: ");
         scanf("%d", &reservas[posicao].id_quarto);
 
@@ -135,7 +135,7 @@ void excluirReserva() {
             char cpf[14];
             int dia_checkin, mes_checkin, ano_checkin;
             printf("Digite o CPF do cliente: ");
-            scanf("%13s", cpf);
+            scanf(" %[^\n]s", cpf);
             printf("Digite a data de Check-in (dd mm aaaa): ");
             scanf("%d %d %d", &dia_checkin, &mes_checkin, &ano_checkin);
             cancelarReservaPorClienteEData(cpf, dia_checkin, mes_checkin, ano_checkin);

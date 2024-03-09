@@ -3,6 +3,7 @@
 #include "string.h"
 #include "funcoesClientes.h"
 
+
 #define MAX_CLIENTES 100
 
 Cliente clientes[MAX_CLIENTES];
@@ -17,9 +18,9 @@ void salvarClientes() {
 
     fprintf(arquivo, "CPF, Nome, Data de Nascimento (dd mm aaaa), Idade, Endereço, Cidade, Estado\n");
     for (int i = 0; i < quantidade_clientes; i++) {
-        fprintf(arquivo, "%s, %s, %02d %02d %04d, %d, %s, %s, %s\n",
-                clientes[i].cpf, clientes[i].nome, clientes[i].dia_nascimento,
-                clientes[i].mes_nascimento, clientes[i].ano_nascimento, clientes[i].idade,
+        fprintf(arquivo, "%s, %s, %02d/%02d/%04d, %d, %s, %s, %s\n",
+                clientes[i].cpf, clientes[i].nome, clientes[i].dataNascimento.dia,
+                clientes[i].dataNascimento.mes, clientes[i].dataNascimento.ano, clientes[i].idade,
                 clientes[i].endereco, clientes[i].cidade, clientes[i].estado);
     }
 
@@ -36,10 +37,10 @@ void carregarClientes() {
     char linha[256];
     fgets(linha, sizeof(linha), arquivo); // Ignorar o cabeçalho
     while (fgets(linha, sizeof(linha), arquivo)) {
-        sscanf(linha, "%13[^,], %50[^,], %d %d %d, %d, %100[^,], %100[^,], %3s",
+        sscanf(linha, "%13[^,], %50[^,], %d/%d/%d, %d, %100[^,], %100[^,], %3s",
                clientes[quantidade_clientes].cpf, clientes[quantidade_clientes].nome,
-               &clientes[quantidade_clientes].dia_nascimento, &clientes[quantidade_clientes].mes_nascimento,
-               &clientes[quantidade_clientes].ano_nascimento, &clientes[quantidade_clientes].idade,
+               &clientes[quantidade_clientes].dataNascimento.dia, &clientes[quantidade_clientes].dataNascimento.mes,
+               &clientes[quantidade_clientes].dataNascimento.ano, &clientes[quantidade_clientes].idade,
                clientes[quantidade_clientes].endereco, clientes[quantidade_clientes].cidade,
                clientes[quantidade_clientes].estado);
         quantidade_clientes++;
@@ -49,70 +50,114 @@ void carregarClientes() {
 }
 
 void cadastrarCliente() {
-    if (quantidade_clientes >= MAX_CLIENTES) {
-        printf("Limite de clientes atingido. Não é possível cadastrar mais clientes.\n");
+    FILE *arquivo = fopen("Clientes.csv", "a");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de clientes.\n");
         return;
     }
 
-    Cliente novo_cliente;
-    printf("CPF do cliente (formato xxx.xxx.xxx-xx): ");
-    scanf("%13s", novo_cliente.cpf);
-    printf("Nome do cliente: ");
-    scanf("%50s", novo_cliente.nome);
-    printf("Data de Nascimento (dd mm aaaa): ");
-    scanf("%d %d %d", &novo_cliente.dia_nascimento, &novo_cliente.mes_nascimento,
-          &novo_cliente.ano_nascimento);
-    printf("Idade do cliente: ");
-    scanf("%d", &novo_cliente.idade);
-    printf("Endereço do cliente: ");
-    scanf("%100s", novo_cliente.endereco);
-    printf("Cidade do cliente: ");
-    scanf("%100s", novo_cliente.cidade);
-    printf("Estado do cliente (sigla de 2 caracteres): ");
-    scanf("%3s", novo_cliente.estado);
+    Cliente novoCliente;
 
-    clientes[quantidade_clientes] = novo_cliente;
-    quantidade_clientes++;
+    // Receber dados do usuário para o novo cliente
+    printf("Digite o CPF do cliente: ");
+    scanf("%13s", novoCliente.cpf); // Usando %13s para limitar o número de caracteres
 
-    salvarClientes();
+    // Limpar o buffer de entrada para remover o caractere de nova linha
+    while (getchar() != '\n');
+
+    printf("Digite o nome do cliente: ");
+    scanf(" %[^\n]", novoCliente.nome);
+
+    printf("Digite a data de nascimento do cliente (formato: DD/MM/AAAA): ");
+    scanf("%d/%d/%d", &novoCliente.dataNascimento.dia, &novoCliente.dataNascimento.mes, &novoCliente.dataNascimento.ano);
+
+    // Calcular a idade com base na data de nascimento fornecida
+    DATA hojeData = hoje();
+    novoCliente.idade = hojeData.ano - novoCliente.dataNascimento.ano;
+    if (hojeData.mes < novoCliente.dataNascimento.mes || (hojeData.mes == novoCliente.dataNascimento.mes && hojeData.dia < novoCliente.dataNascimento.dia)) {
+        novoCliente.idade--; // Ainda não fez aniversário este ano
+    }
+
+    printf("Digite o endereco do cliente: ");
+    scanf(" %[^\n]", novoCliente.endereco);
+
+    printf("Digite a cidade do cliente: ");
+    scanf(" %[^\n]", novoCliente.cidade);
+
+    printf("Digite o estado do cliente: ");
+    scanf("%s", novoCliente.estado);
+
+    // Escrever os dados do novo cliente no arquivo CSV
+    fprintf(arquivo, "%s, %s, %02d/%02d/%04d, %d, %s, %s, %s\n",
+            novoCliente.cpf, novoCliente.nome,
+            novoCliente.dataNascimento.dia, novoCliente.dataNascimento.mes, novoCliente.dataNascimento.ano,
+            novoCliente.idade,
+            novoCliente.endereco, novoCliente.cidade, novoCliente.estado);
+
+    fclose(arquivo);
 }
 
+
 void alterarCliente() {
+    FILE *arquivo = fopen("clientes.csv", "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de clientes.\n");
+        return;
+    }
+
+    FILE *temp = fopen("temp.csv", "w");
+    if (temp == NULL) {
+        printf("Erro ao criar o arquivo temporário.\n");
+        fclose(arquivo);
+        return;
+    }
+
+    Cliente clienteExistente;
     char cpf[14];
-    int posicao = -1;
+    printf("Digite o CPF do cliente que deseja alterar: ");
+    scanf("%s", cpf);
 
-    printf("Digite o CPF do cliente que deseja alterar (formato xxx.xxx.xxx-xx): ");
-    scanf("%13s", cpf);
+    char linha[256];
+    while (fgets(linha, sizeof(linha), arquivo)) {
+        char tempCpf[14];
+        sscanf(linha, "%[^,],", tempCpf);
+        if (strcmp(tempCpf, cpf) == 0) {
+            // Encontrou o cliente que deseja alterar
 
-    // Encontra a posição do cliente com o CPF especificado
-    for (int i = 0; i < quantidade_clientes; i++) {
-        if (strcmp(clientes[i].cpf, cpf) == 0) {
-            posicao = i;
-            break;
+            // Receber novos dados do usuário
+            printf("Digite o novo nome do cliente: ");
+            scanf("%s", clienteExistente.nome);
+
+            printf("Digite a nova data de nascimento do cliente (formato: DD/MM/AAAA): ");
+            char dataNascimentoStr[11];
+            scanf("%s", dataNascimentoStr);
+            StringToData(dataNascimentoStr, &clienteExistente.dataNascimento);
+
+            printf("Digite o novo endereco do cliente: ");
+            scanf("%s", clienteExistente.endereco);
+
+            printf("Digite a nova cidade do cliente: ");
+            scanf("%s", clienteExistente.cidade);
+
+            printf("Digite o novo estado do cliente: ");
+            scanf("%s", clienteExistente.estado);
+
+            // Escrever os novos dados no arquivo temporário
+            fprintf(temp, "%s,%s,%d/%d/%d,%s,%s,%s\n", cpf, clienteExistente.nome,
+                    clienteExistente.dataNascimento.dia, clienteExistente.dataNascimento.mes, clienteExistente.dataNascimento.ano,
+                    clienteExistente.endereco, clienteExistente.cidade, clienteExistente.estado);
+        } else {
+            // Escrever a linha original no arquivo temporário
+            fputs(linha, temp);
         }
     }
 
-    // Se o cliente for encontrado
-    if (posicao != -1) {
-        printf("Novo nome do cliente: ");
-        scanf("%50s", clientes[posicao].nome);
-        printf("Nova data de nascimento (dd mm aaaa): ");
-        scanf("%d %d %d", &clientes[posicao].dia_nascimento, &clientes[posicao].mes_nascimento,
-              &clientes[posicao].ano_nascimento);
-        printf("Nova idade do cliente: ");
-        scanf("%d", &clientes[posicao].idade);
-        printf("Novo endereço do cliente: ");
-        scanf("%100s", clientes[posicao].endereco);
-        printf("Nova cidade do cliente: ");
-        scanf("%100s", clientes[posicao].cidade);
-        printf("Novo estado do cliente (sigla de 2 caracteres): ");
-        scanf("%3s", clientes[posicao].estado);
+    fclose(arquivo);
+    fclose(temp);
 
-        salvarClientes();
-        printf("Cliente alterado com sucesso.\n");
-    } else {
-        printf("Cliente com o CPF %s não encontrado.\n", cpf);
-    }
+    // Substituir o arquivo original pelo temporário
+    remove("Clientes.csv");
+    rename("temp.csv", "Clientes.csv");
 }
 
 void excluirCliente() {
@@ -120,7 +165,7 @@ void excluirCliente() {
     int posicao = -1;
 
     printf("Digite o CPF do cliente que deseja excluir (formato xxx.xxx.xxx-xx): ");
-    scanf("%13s", cpf);
+    scanf(" %[^\n]s", cpf);
 
     // Encontra a posição do cliente com o CPF especificado
     for (int i = 0; i < quantidade_clientes; i++) {

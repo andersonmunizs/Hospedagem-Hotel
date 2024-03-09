@@ -10,4 +10,5 @@ add_executable(Projeto2 main.c
         funcoesReservas.h
         funcoesReservas.c
         funcoesHospedagem.h
-        funcoesHospedagem.c)
+        funcoesHospedagem.c
+        tempo.c)

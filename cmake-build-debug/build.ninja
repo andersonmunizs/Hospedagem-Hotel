@@ -85,6 +85,12 @@ build CMakeFiles/Projeto2.dir/funcoesHospedagem.c.obj: C_COMPILER__Projeto2_unsc
   OBJECT_DIR = CMakeFiles\Projeto2.dir
   OBJECT_FILE_DIR = CMakeFiles\Projeto2.dir
 
+build CMakeFiles/Projeto2.dir/tempo.c.obj: C_COMPILER__Projeto2_unscanned_Debug C$:/Users/Anderson/Desktop/Projeto2/tempo.c || cmake_object_order_depends_target_Projeto2
+  DEP_FILE = CMakeFiles\Projeto2.dir\tempo.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Projeto2.dir
+  OBJECT_FILE_DIR = CMakeFiles\Projeto2.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Projeto2
@@ -93,7 +99,7 @@ build CMakeFiles/Projeto2.dir/funcoesHospedagem.c.obj: C_COMPILER__Projeto2_unsc
 #############################################
 # Link the executable Projeto2.exe
 
-build Projeto2.exe: C_EXECUTABLE_LINKER__Projeto2_Debug CMakeFiles/Projeto2.dir/main.c.obj CMakeFiles/Projeto2.dir/funcoesQuartos.c.obj CMakeFiles/Projeto2.dir/funcoesClientes.c.obj CMakeFiles/Projeto2.dir/funcoesMenu.c.obj CMakeFiles/Projeto2.dir/funcoesReservas.c.obj CMakeFiles/Projeto2.dir/funcoesHospedagem.c.obj
+build Projeto2.exe: C_EXECUTABLE_LINKER__Projeto2_Debug CMakeFiles/Projeto2.dir/main.c.obj CMakeFiles/Projeto2.dir/funcoesQuartos.c.obj CMakeFiles/Projeto2.dir/funcoesClientes.c.obj CMakeFiles/Projeto2.dir/funcoesMenu.c.obj CMakeFiles/Projeto2.dir/funcoesReservas.c.obj CMakeFiles/Projeto2.dir/funcoesHospedagem.c.obj CMakeFiles/Projeto2.dir/tempo.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Projeto2.dir
