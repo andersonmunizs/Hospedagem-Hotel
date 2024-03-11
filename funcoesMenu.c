@@ -126,18 +126,18 @@ void menuHospedagem() {
     int opcao;
     do {
         printf("\nMenu Hospedagem\n");
-        printf("1. Iniciar Hospedagem\n");
-        printf("2. Encerrar Hospedagem\n");
+        printf("1. Carregar Hospedagens\n");
+        printf("2. Exibir Hospedagens\n");
         printf("9. Voltar ao Menu Principal\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
 
         switch(opcao) {
             case 1:
-                iniciarHospedagem();
+                carregarHospedagem();
                 break;
             case 2:
-                encerrarHospedagem();
+                //exibirTodasHospedagens();
                 break;
             case 9:
                 printf("Voltando ao Menu Principal...\n");

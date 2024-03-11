@@ -1,6 +1,7 @@
 //funcoesClientes.c
 #include <stdio.h>
-#include "string.h"
+#include "stdlib.h"
+#include <string.h>
 #include "funcoesClientes.h"
 
 
@@ -37,12 +38,43 @@ void carregarClientes() {
     char linha[256];
     fgets(linha, sizeof(linha), arquivo); // Ignorar o cabeçalho
     while (fgets(linha, sizeof(linha), arquivo)) {
-        sscanf(linha, "%13[^,], %50[^,], %d/%d/%d, %d, %100[^,], %100[^,], %3s",
-               clientes[quantidade_clientes].cpf, clientes[quantidade_clientes].nome,
-               &clientes[quantidade_clientes].dataNascimento.dia, &clientes[quantidade_clientes].dataNascimento.mes,
-               &clientes[quantidade_clientes].dataNascimento.ano, &clientes[quantidade_clientes].idade,
-               clientes[quantidade_clientes].endereco, clientes[quantidade_clientes].cidade,
-               clientes[quantidade_clientes].estado);
+        char *campos;
+        const char delimiter[2] = ","; // Delimitador utilizado no arquivo CSV
+        campos = strtok(linha, delimiter);
+
+        int campoAtual = 0;
+        Cliente novoCliente;
+
+        while (campos != NULL) {
+            switch (campoAtual) {
+                case CPF_CLI:
+                    strcpy(novoCliente.cpf, campos);
+                    break;
+                case NOME_CLI:
+                    strcpy(novoCliente.nome, campos);
+                    break;
+                case DATA_NASC_CLI:
+                    sscanf(campos, "%d/%d/%d", &novoCliente.dataNascimento.dia, &novoCliente.dataNascimento.mes, &novoCliente.dataNascimento.ano);
+                    break;
+                case IDADE_CLI:
+                    novoCliente.idade = atoi(campos);
+                    break;
+                case ENDERECO_CLI:
+                    strcpy(novoCliente.endereco, campos);
+                    break;
+                case CIDADE_CLI:
+                    strcpy(novoCliente.cidade, campos);
+                    break;
+                case ESTADO_CLI:
+                    strcpy(novoCliente.estado, campos);
+                    break;
+                default:
+                    break;
+            }
+            campos = strtok(NULL, delimiter);
+            campoAtual++;
+        }
+        clientes[quantidade_clientes] = novoCliente;
         quantidade_clientes++;
     }
 
