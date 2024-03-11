@@ -4,6 +4,7 @@
 #include "funcoesQuartos.h"
 #include "funcoesReservas.h"
 #include "funcoesHospedagem.h"
+#include "tempo.h"
 
 void menuQuartos() {
     int opcao;
@@ -107,7 +108,9 @@ void menuReservas() {
                 scanf("%d %d %d", &dia_checkin, &mes_checkin, &ano_checkin);
                 printf("Data de Check-out (dd mm aaaa): ");
                 scanf("%d %d %d", &dia_checkout, &mes_checkout, &ano_checkout);
-                verificarDisponibilidadeQuarto(tipo_quarto, dia_checkin, mes_checkin, ano_checkin, dia_checkout, mes_checkout, ano_checkout);
+                DATA checkin = {dia_checkin, mes_checkin, ano_checkin};
+                DATA checkout = {dia_checkout, mes_checkout, ano_checkout};
+                verificarDisponibilidadeQuarto(tipo_quarto, checkin, checkout);
             }
                 break;
             case 9:

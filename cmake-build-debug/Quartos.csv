@@ -1,2 +1,3 @@
 ID, Camas Solteiro, Camas Casal, Tipo Quarto, Preço Diária, Status
-123, 2, 1, Duplo, 200.00, Disponivel
+123, 1, 2, Duplo, 250.00, D
+789, 1, 2, Single, 300.00, I

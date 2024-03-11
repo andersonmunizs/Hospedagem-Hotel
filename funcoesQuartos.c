@@ -1,10 +1,14 @@
 #include <stdio.h>
+#include "string.h"
 #include "funcoesQuartos.h"
 
 #define MAX_QUARTOS 100
 
 Quarto quartos[MAX_QUARTOS];
 int quantidade_quartos = 0;
+
+const char separadorCSV = ';';
+const char nomeArquivoCSV[] = "Quartos.csv";
 
 void salvarQuartos() {
     FILE *arquivo = fopen("Quartos.csv", "w");
@@ -30,13 +34,13 @@ void carregarQuartos() {
         return;
     }
 
-    char linha[256];
-    fgets(linha, sizeof(linha), arquivo); // Ignorar o cabeçalho
-    while (fgets(linha, sizeof(linha), arquivo)) {
-        sscanf(linha, "%d, %d, %d, %9[^,], %lf, %3s",
-               &quartos[quantidade_quartos].id_quarto, &quartos[quantidade_quartos].camas_solteiro,
-               &quartos[quantidade_quartos].camas_casal, quartos[quantidade_quartos].tipo_quarto,
-               &quartos[quantidade_quartos].preco_diaria, quartos[quantidade_quartos].status);
+    // Ignorar o cabeçalho
+    fscanf(arquivo, " %*[^\n]\n");
+
+    while (fscanf(arquivo, "%d, %d, %d, %9[^,], %lf, %2s",
+                  &quartos[quantidade_quartos].id_quarto, &quartos[quantidade_quartos].camas_solteiro,
+                  &quartos[quantidade_quartos].camas_casal, quartos[quantidade_quartos].tipo_quarto,
+                  &quartos[quantidade_quartos].preco_diaria, quartos[quantidade_quartos].status) == 6) {
         quantidade_quartos++;
     }
 
@@ -58,11 +62,11 @@ void cadastrarQuarto() {
     printf("Número de camas de casal: ");
     scanf("%d", &novo_quarto.camas_casal);
     printf("Tipo de quarto (Single, Duplo, Triplo): ");
-    scanf("%s", novo_quarto.tipo_quarto);
+    scanf(" %[^\n]", novo_quarto.tipo_quarto);
     printf("Preço da diária: ");
     scanf("%lf", &novo_quarto.preco_diaria);
-    printf("Status (Disponível ou Indisponível): ");
-    scanf("%s", novo_quarto.status);
+    printf("Status D = Disponivel, I = Indisponível): ");
+    scanf(" %[^\n]", novo_quarto.status);
 
     quartos[quantidade_quartos] = novo_quarto;
     quantidade_quartos++;
@@ -84,18 +88,18 @@ void alterarQuarto() {
         }
     }
 
-    //Se o quarto for encontrado
+    // Se o quarto for encontrado
     if (posicao != -1) {
         printf("Novo número de camas de solteiro: ");
         scanf("%d", &quartos[posicao].camas_solteiro);
         printf("Novo número de camas de casal: ");
         scanf("%d", &quartos[posicao].camas_casal);
         printf("Novo tipo de quarto (Single, Duplo, Triplo): ");
-        scanf("%s", quartos[posicao].tipo_quarto);
+        scanf(" %[^\n]", quartos[posicao].tipo_quarto);
         printf("Novo preço da diária: ");
         scanf("%lf", &quartos[posicao].preco_diaria);
-        printf("Novo status (Disponível ou Indisponível");
-        scanf("%s", quartos[posicao].status);
+        printf("Novo status (Disponível ou Indisponível): ");
+        scanf(" %[^\n]", quartos[posicao].status);
 
         salvarQuartos();
         printf("Quarto alterado com sucesso.\n");
@@ -111,14 +115,12 @@ void excluirQuarto() {
     printf("Digite o ID do quarto que deseja excluir: ");
     scanf("%d", &id);
 
-
     for (int i = 0; i < quantidade_quartos; i++) {
         if (quartos[i].id_quarto == id) {
             posicao = i;
             break;
         }
     }
-
 
     if (posicao != -1) {
         for (int i = posicao; i < quantidade_quartos - 1; i++) {
