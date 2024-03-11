@@ -7,8 +7,6 @@
 Quarto quartos[MAX_QUARTOS];
 int quantidade_quartos = 0;
 
-const char separadorCSV = ';';
-const char nomeArquivoCSV[] = "Quartos.csv";
 
 void salvarQuartos() {
     FILE *arquivo = fopen("Quartos.csv", "w");
@@ -65,7 +63,7 @@ void cadastrarQuarto() {
     scanf(" %[^\n]", novo_quarto.tipo_quarto);
     printf("Preço da diária: ");
     scanf("%lf", &novo_quarto.preco_diaria);
-    printf("Status D = Disponivel, I = Indisponível): ");
+    printf("Status: D = Disponivel, I = Indisponível): ");
     scanf(" %[^\n]", novo_quarto.status);
 
     quartos[quantidade_quartos] = novo_quarto;
@@ -98,7 +96,7 @@ void alterarQuarto() {
         scanf(" %[^\n]", quartos[posicao].tipo_quarto);
         printf("Novo preço da diária: ");
         scanf("%lf", &quartos[posicao].preco_diaria);
-        printf("Novo status (Disponível ou Indisponível): ");
+        printf("Novo status: D = Disponivel ou I = Indisponível): ");
         scanf(" %[^\n]", quartos[posicao].status);
 
         salvarQuartos();

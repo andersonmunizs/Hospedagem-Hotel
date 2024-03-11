@@ -58,11 +58,9 @@ void cadastrarCliente() {
 
     Cliente novoCliente;
 
-    // Receber dados do usuário para o novo cliente
     printf("Digite o CPF do cliente: ");
-    scanf("%13s", novoCliente.cpf); // Usando %13s para limitar o número de caracteres
+    scanf("%13s", novoCliente.cpf);
 
-    // Limpar o buffer de entrada para remover o caractere de nova linha
     while (getchar() != '\n');
 
     printf("Digite o nome do cliente: ");
@@ -71,7 +69,6 @@ void cadastrarCliente() {
     printf("Digite a data de nascimento do cliente (formato: DD/MM/AAAA): ");
     scanf("%d/%d/%d", &novoCliente.dataNascimento.dia, &novoCliente.dataNascimento.mes, &novoCliente.dataNascimento.ano);
 
-    // Calcular a idade com base na data de nascimento fornecida
     DATA hojeData = hoje();
     novoCliente.idade = hojeData.ano - novoCliente.dataNascimento.ano;
     if (hojeData.mes < novoCliente.dataNascimento.mes || (hojeData.mes == novoCliente.dataNascimento.mes && hojeData.dia < novoCliente.dataNascimento.dia)) {
@@ -167,7 +164,7 @@ void excluirCliente() {
     printf("Digite o CPF do cliente que deseja excluir (formato xxx.xxx.xxx-xx): ");
     scanf(" %[^\n]s", cpf);
 
-    // Encontra a posição do cliente com o CPF especificado
+    //Encontra a posição do cliente com o CPF especificado
     for (int i = 0; i < quantidade_clientes; i++) {
         if (strcmp(clientes[i].cpf, cpf) == 0) {
             posicao = i;
@@ -175,7 +172,7 @@ void excluirCliente() {
         }
     }
 
-    // Se o cliente for encontrado
+    //Se o cliente for encontrado
     if (posicao != -1) {
         for (int i = posicao; i < quantidade_clientes - 1; i++) {
             clientes[i] = clientes[i + 1];

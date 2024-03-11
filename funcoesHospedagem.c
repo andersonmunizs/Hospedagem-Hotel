@@ -2,6 +2,9 @@
 #include "funcoesHospedagem.h"
 #include "funcoesReservas.h"
 
+
+/*REFAZERREFAZERREFAZERREFAZERREFAZERREFAZERREFAZER
+ * REFAZERREFAZERREFAZERREFAZERREFAZERREFAZERREFAZER*/
 void iniciarHospedagem() {
     int id_reserva;
     printf("Digite o ID da reserva para iniciar a hospedagem: ");
