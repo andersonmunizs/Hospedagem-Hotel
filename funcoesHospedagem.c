@@ -6,12 +6,13 @@
 #include "funcoesQuartos.h"
 #include "tempo.h"
 
-
+int codigo_reserva_global = 0;
 
 void iniciar_hospedagem() {
     int codigo_reserva;
     printf("Digite o código da reserva para iniciar a hospedagem: ");
     scanf("%d", &codigo_reserva);
+    codigo_reserva_global = codigo_reserva;
 
     // Abrir o arquivo de reservas em modo de leitura
     FILE *arquivo_reservas = fopen("reservas.csv", "r");
@@ -66,7 +67,7 @@ void iniciar_hospedagem() {
 
     fprintf(arquivo_hospedagens, "%d,%s,Ativa\n", codigo_reserva, data_checkin);
 
-    /
+
     fclose(arquivo_hospedagens);
 
     printf("Iniciando hospedagem para reserva de código: %d\n", codigo_reserva);
@@ -127,6 +128,8 @@ void finalizar_hospedagem() {
         int codigo_reserva;
         printf("Digite o código da reserva: ");
         scanf("%d", &codigo_reserva);
+
+        codigo_reserva_global = codigo_reserva;
 
         // Procurar hospedagem pelo código da reserva
         Hospedagem hospedagem;

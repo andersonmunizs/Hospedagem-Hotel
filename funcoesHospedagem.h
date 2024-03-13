@@ -18,7 +18,7 @@ typedef struct {
     char status[20];
 } Hospedagem;
 
-
+extern int codigo_reserva_global;
 
 void iniciar_hospedagem();
 void carregarHospedagens();
