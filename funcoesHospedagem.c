@@ -34,7 +34,6 @@ void iniciar_hospedagem() {
         char *token = strtok(linha, ",");
         int codigo = atoi(token);
 
-        // Se o código de reserva encontrado for igual ao código fornecido, marcar como encontrado
         if (codigo == codigo_reserva) {
             encontrado = 1;
             break;
