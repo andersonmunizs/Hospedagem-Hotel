@@ -27,14 +27,14 @@ void salvarClientes() {
 
     // Escreve o cabeçalho apenas se o arquivo estiver vazio
     if (arquivoVazio) {
-        fprintf(arquivo, "CPF, Nome, Data de Nascimento (dd mm aaaa), Idade, Endereço, Cidade, Estado\n");
+        fprintf(arquivo, "CPF, Nome, Data de Nascimento, Endereço, Cidade, Estado\n");
     }
 
     // Escreve os dados dos clientes
     for (int i = 0; i < quantidade_clientes; i++) {
-        fprintf(arquivo, "%s, %s, %02d/%02d/%04d, %d, %s, %s, %s\n",
+        fprintf(arquivo, "%s, %s, %02d/%02d/%04d, %s, %s, %s\n",
                 clientes[i].cpf, clientes[i].nome, clientes[i].dataNascimento.dia,
-                clientes[i].dataNascimento.mes, clientes[i].dataNascimento.ano, clientes[i].idade,
+                clientes[i].dataNascimento.mes, clientes[i].dataNascimento.ano,
                 clientes[i].endereco, clientes[i].cidade, clientes[i].estado);
     }
 
@@ -59,27 +59,28 @@ void carregarClientes() {
         Cliente novoCliente;
 
         while (campos != NULL) {
+            // Remover espaços extras antes e depois de cada campo
+            char campoTrim[strlen(campos) + 1];
+            sscanf(campos, " %s ", campoTrim);
+
             switch (campoAtual) {
                 case CPF_CLI:
-                    strcpy(novoCliente.cpf, campos);
+                    strcpy(novoCliente.cpf, campoTrim);
                     break;
                 case NOME_CLI:
-                    strcpy(novoCliente.nome, campos);
+                    strcpy(novoCliente.nome, campoTrim);
                     break;
                 case DATA_NASC_CLI:
-                    sscanf(campos, "%d/%d/%d", &novoCliente.dataNascimento.dia, &novoCliente.dataNascimento.mes, &novoCliente.dataNascimento.ano);
-                    break;
-                case IDADE_CLI:
-                    novoCliente.idade = atoi(campos);
+                    sscanf(campoTrim, "%d/%d/%d", &novoCliente.dataNascimento.dia, &novoCliente.dataNascimento.mes, &novoCliente.dataNascimento.ano);
                     break;
                 case ENDERECO_CLI:
-                    strcpy(novoCliente.endereco, campos);
+                    strcpy(novoCliente.endereco, campoTrim);
                     break;
                 case CIDADE_CLI:
-                    strcpy(novoCliente.cidade, campos);
+                    strcpy(novoCliente.cidade, campoTrim);
                     break;
                 case ESTADO_CLI:
-                    strcpy(novoCliente.estado, campos);
+                    strcpy(novoCliente.estado, campoTrim);
                     break;
                 default:
                     break;
@@ -114,12 +115,6 @@ void cadastrarCliente() {
     printf("Digite a data de nascimento do cliente (formato: DD/MM/AAAA): ");
     scanf("%d/%d/%d", &novoCliente.dataNascimento.dia, &novoCliente.dataNascimento.mes, &novoCliente.dataNascimento.ano);
 
-    DATA hojeData = hoje();
-    novoCliente.idade = hojeData.ano - novoCliente.dataNascimento.ano;
-    if (hojeData.mes < novoCliente.dataNascimento.mes || (hojeData.mes == novoCliente.dataNascimento.mes && hojeData.dia < novoCliente.dataNascimento.dia)) {
-        novoCliente.idade--; // Ainda não fez aniversário este ano
-    }
-
     printf("Digite o endereco do cliente: ");
     scanf(" %[^\n]", novoCliente.endereco);
 
@@ -130,10 +125,9 @@ void cadastrarCliente() {
     scanf("%s", novoCliente.estado);
 
     // Escrever os dados do novo cliente no arquivo CSV
-    fprintf(arquivo, "%s, %s, %02d/%02d/%04d, %d, %s, %s, %s\n",
+    fprintf(arquivo, "%s, %s, %02d/%02d/%04d, %s, %s, %s\n",
             novoCliente.cpf, novoCliente.nome,
             novoCliente.dataNascimento.dia, novoCliente.dataNascimento.mes, novoCliente.dataNascimento.ano,
-            novoCliente.idade,
             novoCliente.endereco, novoCliente.cidade, novoCliente.estado);
 
     fclose(arquivo);
@@ -141,7 +135,7 @@ void cadastrarCliente() {
 
 
 void alterarCliente() {
-    FILE *arquivo = fopen("clientes.csv", "r");
+    FILE *arquivo = fopen("Clientes.csv", "r");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo de clientes.\n");
         return;
@@ -168,7 +162,7 @@ void alterarCliente() {
 
             // Receber novos dados do usuário
             printf("Digite o novo nome do cliente: ");
-            scanf("%s", clienteExistente.nome);
+            scanf(" %[^\n]", clienteExistente.nome);
 
             printf("Digite a nova data de nascimento do cliente (formato: DD/MM/AAAA): ");
             char dataNascimentoStr[11];
@@ -176,16 +170,16 @@ void alterarCliente() {
             StringToData(dataNascimentoStr, &clienteExistente.dataNascimento);
 
             printf("Digite o novo endereco do cliente: ");
-            scanf("%s", clienteExistente.endereco);
+            scanf(" %[^\n]", clienteExistente.endereco);
 
             printf("Digite a nova cidade do cliente: ");
-            scanf("%s", clienteExistente.cidade);
+            scanf(" %[^\n]", clienteExistente.cidade);
 
             printf("Digite o novo estado do cliente: ");
             scanf("%s", clienteExistente.estado);
 
             // Escrever os novos dados no arquivo temporário
-            fprintf(temp, "%s,%s,%d/%d/%d,%s,%s,%s\n", cpf, clienteExistente.nome,
+            fprintf(temp, "%s, %s, %02d/%02d/%04d, %s, %s, %s\n", cpf, clienteExistente.nome,
                     clienteExistente.dataNascimento.dia, clienteExistente.dataNascimento.mes, clienteExistente.dataNascimento.ano,
                     clienteExistente.endereco, clienteExistente.cidade, clienteExistente.estado);
         } else {

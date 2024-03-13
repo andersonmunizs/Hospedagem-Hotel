@@ -98,7 +98,7 @@ void carregarHospedagens() {
             // Ler os valores da linha para as variáveis correspondentes
             sscanf(linha, "%d,%10[^,],%10[^,],%7s", &codigo_reserva, data_checkin, quarto, status);
             // Exibir a hospedagem para fins de depuração
-            printf("Reserva encontrada: %d, %s, %s, %s\n", codigo_reserva, data_checkin, quarto, status);
+            //("Reserva encontrada: %d, %s, %s, %s\n", codigo_reserva, data_checkin, quarto, status);
             // Agora você pode fazer o que quiser com os dados da hospedagem, como armazená-los em um array
         }
         fclose(arquivo);
