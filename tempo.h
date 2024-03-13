@@ -18,6 +18,7 @@ typedef struct DATA
 } DATA ;
 
 
+
 /**
  * Função que converte texto para o tipo DATA
  * @param str String que tem a data
@@ -62,7 +63,7 @@ int DataCmp(DATA d1, DATA d2);
  * 
 */
 int DataDiff(DATA d1, DATA d2);
-
+int calcularNumeroDias(DATA data_inicio, DATA data_fim);
 
 #endif
   

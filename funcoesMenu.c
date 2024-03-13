@@ -127,7 +127,7 @@ void menuHospedagem() {
     do {
         printf("\nMenu Hospedagem\n");
         printf("1. Iniciar Hospedagem\n");
-        printf("2. Exibir Hospedagens\n");
+        printf("2. Finalizar Hospedagem\n");
         printf("9. Voltar ao Menu Principal\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
@@ -137,7 +137,7 @@ void menuHospedagem() {
                 iniciar_hospedagem();
                 break;
             case 2:
-                //exibirTodasHospedagens();
+                finalizar_hospedagem();
                 break;
             case 9:
                 printf("Voltando ao Menu Principal...\n");

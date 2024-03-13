@@ -132,3 +132,17 @@ void excluirQuarto() {
         printf("Quarto com o ID %d não encontrado.\n", id);
     }
 }
+
+Quarto obterQuartoPorNumero(int numero_quarto) {
+    // Supondo que você tenha uma lista de quartos, faça a busca pelo número do quarto
+    // Aqui, estou apenas criando um quarto fictício para ilustrar a ideia
+    Quarto quarto;
+    quarto.id_quarto = numero_quarto;
+    quarto.camas_solteiro = 2;
+    quarto.camas_casal = 1;
+    strcpy(quarto.tipo_quarto, "Duplo");
+    quarto.preco_diaria = 150.0;
+    strcpy(quarto.status, "Disponivel");
+
+    return quarto;
+}

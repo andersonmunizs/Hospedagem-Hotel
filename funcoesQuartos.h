@@ -20,5 +20,7 @@ void excluirQuarto();
 void carregarQuartos();
 void salvarQuartos();
 
+Quarto obterQuartoPorNumero(int numero);
+
 #endif
 

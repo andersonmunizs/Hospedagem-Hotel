@@ -9,13 +9,19 @@
 // Definição da estrutura de dados para representar uma hospedagem
 typedef struct {
     int codigo_reserva;
-    char data_checkin[20]; // A data de check-in será armazenada como uma string
-    int quarto;
-    char status[10]; // "Ativa" ou "Inativa"
+    char cpf_cliente[15];
+    char data_checkin[11];
+    char data_checkout[11]; // Adicionado o membro data_checkout
+    char tipo_quarto[10]; // Adicionado o membro tipo_quarto
+    int id_quarto;
+    char quarto[10];
+    char status[20];
 } Hospedagem;
 
-// Função para iniciar a hospedagem de um cliente a partir do código da reserva
+
+
 void iniciar_hospedagem();
 void carregarHospedagens();
+void finalizar_hospedagem();
 
 #endif /* FUNCOESHOSPEDAGEM_H */

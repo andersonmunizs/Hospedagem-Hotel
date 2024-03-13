@@ -163,7 +163,19 @@ int DataDiff(DATA d2, DATA d1)
     return dias;
 }
 
+int calcularNumeroDias(DATA data_inicio, DATA data_fim) {
+    // Convertendo as datas para segundos desde 1970-01-01
+    time_t inicio_segundos = mktime(&(struct tm){.tm_year = data_inicio.ano - 1900, .tm_mon = data_inicio.mes - 1, .tm_mday = data_inicio.dia});
+    time_t fim_segundos = mktime(&(struct tm){.tm_year = data_fim.ano - 1900, .tm_mon = data_fim.mes - 1, .tm_mday = data_fim.dia});
 
+    // Calculando a diferença de segundos entre as datas
+    double diferenca_segundos = difftime(fim_segundos, inicio_segundos);
+
+    // Convertendo a diferença de segundos para dias
+    int numero_dias = diferenca_segundos / (60 * 60 * 24);
+
+    return numero_dias;
+}
 
 
 
