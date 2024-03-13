@@ -7,7 +7,7 @@
 enum CAMPOS_CLIENTE {CPF_CLI=0, NOME_CLI, DATA_NASC_CLI, IDADE_CLI, ENDERECO_CLI, CIDADE_CLI, ESTADO_CLI};
 
 typedef struct {
-    char cpf[14];
+    char cpf[20];
     char nome[51];
     DATA dataNascimento;
     int idade;

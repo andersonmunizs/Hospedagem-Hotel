@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "stdlib.h"
 #include <string.h>
+#include "stdbool.h"
 #include "funcoesClientes.h"
 
 
@@ -11,13 +12,25 @@ Cliente clientes[MAX_CLIENTES];
 int quantidade_clientes = 0;
 
 void salvarClientes() {
-    FILE *arquivo = fopen("Clientes.csv", "w");
+    FILE *arquivo = fopen("Clientes.csv", "a");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo.\n");
         return;
     }
 
-    fprintf(arquivo, "CPF, Nome, Data de Nascimento (dd mm aaaa), Idade, Endereço, Cidade, Estado\n");
+    // Verifica se o arquivo já existe e está vazio
+    bool arquivoVazio = false;
+    fseek(arquivo, 0, SEEK_END);
+    if (ftell(arquivo) == 0) {
+        arquivoVazio = true;
+    }
+
+    // Escreve o cabeçalho apenas se o arquivo estiver vazio
+    if (arquivoVazio) {
+        fprintf(arquivo, "CPF, Nome, Data de Nascimento (dd mm aaaa), Idade, Endereço, Cidade, Estado\n");
+    }
+
+    // Escreve os dados dos clientes
     for (int i = 0; i < quantidade_clientes; i++) {
         fprintf(arquivo, "%s, %s, %02d/%02d/%04d, %d, %s, %s, %s\n",
                 clientes[i].cpf, clientes[i].nome, clientes[i].dataNascimento.dia,
@@ -91,7 +104,7 @@ void cadastrarCliente() {
     Cliente novoCliente;
 
     printf("Digite o CPF do cliente: ");
-    scanf("%13s", novoCliente.cpf);
+    scanf(" %[^\n]s", novoCliente.cpf);
 
     while (getchar() != '\n');
 
