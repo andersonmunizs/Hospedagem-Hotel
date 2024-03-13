@@ -4,6 +4,9 @@
 #include <string.h>
 #include "funcoesHospedagem.h"
 
+
+
+/*
 int quantidadeHospedagens() {
     FILE *csv;
     char linha[1000];
@@ -91,3 +94,4 @@ void exibirHospedagem(HOSPEDAGEM h) {
     printf("##################################### \n");
 }
 
+*/

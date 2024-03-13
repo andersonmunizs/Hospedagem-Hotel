@@ -13,9 +13,9 @@ typedef struct {
     char status[12];
     float precoTotal;
 } HOSPEDAGEM;
-
+/*
 int quantidadeHospedagens();
 void carregarHospedagem();
 void exibirHospedagem(HOSPEDAGEM h);
-
+*/
 #endif /* FUNCOESHOSPEDAGEM_H */
