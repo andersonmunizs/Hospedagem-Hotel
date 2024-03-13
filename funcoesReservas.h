@@ -16,6 +16,7 @@ typedef struct {
     DATA checkout;
     char tipo_quarto[10];
     int id_quarto;
+    char status;
 } Reserva;
 
 extern Reserva reservas[MAX_RESERVAS];

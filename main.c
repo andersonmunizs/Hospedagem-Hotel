@@ -6,15 +6,12 @@
 #include "funcoesHospedagem.h"
 #include "funcoesMenu.h"
 
-extern Reserva reservas[MAX_RESERVAS];
-extern int quantidade_reservas;
-
 
 int main() {
     carregarQuartos(); //Carrega os quartos do arquivo CSV
     carregarClientes(); //Carrega os clientes do arquivo CSV
     carregarReservas(); //Carrega as reservas do arquivo CSV
-
+    carregarHospedagens(); //Carrega as hospedagens do arquivo CSV
     int opcao;
     do {
         printf("\nMenu Principal\n");

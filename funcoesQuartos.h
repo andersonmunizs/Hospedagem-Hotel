@@ -11,10 +11,14 @@ typedef struct {
     char status[4];
 } Quarto;
 
+extern int quantidade_quartos;
+extern Quarto quartos[100];
+
 void cadastrarQuarto();
 void alterarQuarto();
 void excluirQuarto();
 void carregarQuartos();
+void salvarQuartos();
 
 #endif
 
