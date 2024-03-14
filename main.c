@@ -5,6 +5,7 @@
 #include "funcoesReservas.h"
 #include "funcoesHospedagem.h"
 #include "funcoesMenu.h"
+#include <locale.h>
 
 
 int main() {
@@ -12,6 +13,8 @@ int main() {
     carregarClientes(); //Carrega os clientes do arquivo CSV
     carregarReservas(); //Carrega as reservas do arquivo CSV
     carregarHospedagens(); //Carrega as hospedagens do arquivo CSV
+    setlocale(LC_ALL, "pt_BR.UTF-8");
+
     int opcao;
     do {
         printf("\nMenu Principal\n");
