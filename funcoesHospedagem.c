@@ -93,7 +93,6 @@ void carregarHospedagens() {
             char data_checkin[11];
             char quarto[10];
             char status[8];
-            // Ler os valores da linha para as variáveis correspondentes
             sscanf(linha, "%d,%10[^,],%10[^,],%7s", &codigo_reserva, data_checkin, quarto, status);
         }
         fclose(arquivo);
@@ -126,15 +125,12 @@ void finalizar_hospedagem() {
         char temp_data_checkin[11], temp_quarto[10], temp_status[20];
         int temp_codigo_reserva;
 
-        // Procurar hospedagem pelo código da reserva
         while (fgets(linha, sizeof(linha), arquivo_hospedagens) != NULL) {
             sscanf(linha, "%d,%10[^,],%10[^,],%19[^,]", &temp_codigo_reserva, temp_data_checkin, temp_quarto, temp_status);
 
             if (temp_codigo_reserva == codigo_reserva && strcmp(temp_status, "Ativa") == 0) {
-                // Encontrou a hospedagem ativa com o código de reserva especificado
                 printf("Hospedagem encontrada para o código de reserva %d.\n", codigo_reserva);
 
-                // Faça o que for necessário com os dados da hospedagem
 
                 break;
             }
