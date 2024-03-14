@@ -126,7 +126,7 @@ void excluirReserva() {
     int opcao;
     printf("Como deseja encontrar a reserva a ser cancelada?\n");
     printf("1. Utilizando o código da reserva\n");
-    printf("2. Utilizando o CPF do cliente e a data de check-in\n");
+    printf("2. [INDISPONIVEL] Utilizando o CPF do cliente e a data de check-in\n");
     printf("Escolha uma opção: ");
     scanf("%d", &opcao);
 
@@ -140,12 +140,12 @@ void excluirReserva() {
         }
         case 2: {
             char cpf[14];
-            DATA checkin;
+            int dia_checkin, mes_checkin, ano_checkin;
             printf("Digite o CPF do cliente: ");
-            scanf(" %[^\n]s", cpf);
+            scanf("%s", cpf);
             printf("Digite a data de Check-in (dd mm aaaa): ");
-            scanf("%d %d %d", &checkin.dia, &checkin.mes, &checkin.ano);
-            cancelarReservaPorClienteEDataF(cpf, checkin.dia, checkin.mes, checkin.ano);
+            scanf("%d %d %d", &dia_checkin, &mes_checkin, &ano_checkin);
+            cancelarReservaPorClienteEData(cpf, dia_checkin, mes_checkin, ano_checkin);
             break;
         }
         default:
@@ -178,66 +178,108 @@ void cancelarReservaPorId(int id) {
     }
 }
 
-void cancelarReservaPorClienteEData(const char *cpf, DATA checkin) {
-    int posicao = -1;
+void cancelarReservaPorClienteEData() {
+    char cpf[15];
+    int dia_checkin, mes_checkin, ano_checkin;
+    printf("Digite o CPF do cliente: ");
+    scanf("%14s", cpf);
+    printf("Digite a data de Check-in (dd mm aaaa): ");
+    scanf("%d %d %d", &dia_checkin, &mes_checkin, &ano_checkin);
 
-    // Encontra a posição da reserva com o CPF do cliente e a data de check-in especificados
-    for (int i = 0; i < quantidade_reservas; i++) {
-        if (strcmp(reservas[i].cpf_cliente, cpf) == 0 &&
-            DataCmp(reservas[i].checkin, checkin) == 0) {
-            posicao = i;
-            break;
-        }
-    }
+    DATA data_checkin;
+    data_checkin.dia = dia_checkin;
+    data_checkin.mes = mes_checkin;
+    data_checkin.ano = ano_checkin;
+    data_checkin.hora = 0;
+    data_checkin.minuto = 0;
+    data_checkin.segundo = 0;
 
-    // Se a reserva for encontrada
-    if (posicao != -1) {
-        for (int i = posicao; i < quantidade_reservas - 1; i++) {
-            reservas[i] = reservas[i + 1];
-        }
-        quantidade_reservas--;
+    DATA data_checkout;
+    data_checkout.dia = 0;
+    data_checkout.mes = 0;
+    data_checkout.ano = 0;
+    data_checkout.hora = 0;
+    data_checkout.minuto = 0;
+    data_checkout.segundo = 0;
 
-        salvarReservas();
-        printf("Reserva do cliente com CPF %s para a data de check-in %02d/%02d/%04d excluída com sucesso.\n", cpf, checkin.dia, checkin.mes, checkin.ano);
-    } else {
-        printf("Reserva do cliente com CPF %s para a data de check-in %02d/%02d/%04d não encontrada.\n", cpf, checkin.dia, checkin.mes, checkin.ano);
-    }
+    // Buscar reserva pelo cliente e data de check-in
+    cancelarReservaPorClienteEDataF(cpf, dia_checkin, mes_checkin, ano_checkin);
 }
 
-void consultarReservasCliente(const char *cpf) {
+void consultarReservasCliente(char *cpf) {
+    FILE *file = fopen("reservas.csv", "r");
+    if (file == NULL) {
+        printf("Erro ao abrir o arquivo de reservas.\n");
+        return;
+    }
+
+    char linha[100];
+    bool encontrou = false;
+
+    // Ignora o cabeçalho do arquivo CSV
+    fgets(linha, sizeof(linha), file);
+
     printf("Reservas associadas ao cliente com CPF %s:\n", cpf);
-    int encontradas = 0;
-    for (int i = 0; i < quantidade_reservas; i++) {
-        if (strcmp(reservas[i].cpf_cliente, cpf) == 0) {
-            printf("ID da Reserva: %d\n", reservas[i].id_reserva);
-            printf("Check-in: %02d/%02d/%04d\n", reservas[i].checkin.dia, reservas[i].checkin.mes, reservas[i].checkin.ano);
-            printf("Check-out: %02d/%02d/%04d\n", reservas[i].checkout.dia, reservas[i].checkout.mes, reservas[i].checkout.ano);
-            printf("Tipo de Quarto: %s\n", reservas[i].tipo_quarto);
-            printf("ID do Quarto: %d\n", reservas[i].id_quarto);
-            printf("\n");
-            encontradas++;
+    while (fgets(linha, sizeof(linha), file)) {
+        char idReserva[10], cpfCliente[15], checkIn[11], checkOut[11], tipoQuarto[20], idQuarto[10];
+        sscanf(linha, "%[^,], %[^,], %[^,], %[^,], %[^,], %[^\n]", idReserva, cpfCliente, checkIn, checkOut, tipoQuarto, idQuarto);
+
+        if (strcmp(cpfCliente, cpf) == 0) {
+            printf("ID da Reserva: %s\n", idReserva);
+            printf("Check-in: %s\n", checkIn);
+            printf("Check-out: %s\n", checkOut);
+            printf("Tipo de Quarto: %s\n", tipoQuarto);
+            printf("ID do Quarto: %s\n", idQuarto);
+            encontrou = true;
         }
     }
-    if (encontradas == 0) {
+
+    if (!encontrou) {
         printf("Nenhuma reserva encontrada para o cliente com CPF %s.\n", cpf);
     }
+
+    fclose(file);
 }
 
-void verificarDisponibilidadeQuarto(const char *tipo_quarto, DATA checkin, DATA checkout) {
-    printf("Verificando disponibilidade de quartos do tipo %s para o período de %02d/%02d/%04d a %02d/%02d/%04d:\n", tipo_quarto, checkin.dia, checkin.mes, checkin.ano, checkout.dia, checkout.mes, checkout.ano);
-    int disponiveis = 0;
+
+Reserva *buscarReservaPorClienteEData(const char *cpf, DATA checkin) {
     for (int i = 0; i < quantidade_reservas; i++) {
-        if (strcmp(reservas[i].tipo_quarto, tipo_quarto) == 0) {
-            if (DataCmp(reservas[i].checkout, checkin) < 0 ||
-                DataCmp(reservas[i].checkin, checkout) > 0) {
-                printf("Quarto disponível: ID %d\n", reservas[i].id_quarto);
-                disponiveis++;
-            }
+        // Verifica se o CPF do cliente e a data de check-in correspondem à reserva atual
+        if (strcmp(reservas[i].cpf_cliente, cpf) == 0 &&
+            compararDatas(reservas[i].checkin, checkin) == 0) {
+            return &reservas[i]; // Retorna o endereço da reserva encontrada
         }
     }
-    if (disponiveis == 0) {
-        printf("Nenhum quarto do tipo %s disponível para o período especificado.\n", tipo_quarto);
-    }
+    return NULL; // Retorna NULL se a reserva não for encontrada
 }
 
-int proximoCodigoReserva = 1;
+void cancelarReserva(Reserva *reserva) {
+    if (reserva == NULL) {
+        printf("Erro: reserva inválida.\n");
+        return;
+    }
+
+    for (int i = 0; i < quantidade_reservas; i++) {
+        if (&reservas[i] == reserva) {
+            // Move as reservas após a reserva a ser cancelada para preencher o espaço
+            for (int j = i; j < quantidade_reservas - 1; j++) {
+                reservas[j] = reservas[j + 1];
+            }
+            quantidade_reservas--; // Atualiza a quantidade de reservas
+            salvarReservas(); // Salva as alterações no arquivo
+            printf("Reserva cancelada com sucesso.\n");
+            return;
+        }
+    }
+    printf("Erro: reserva não encontrada.\n");
+}
+
+int compararDatas(DATA data1, DATA data2) {
+    if (data1.ano != data2.ano) {
+        return data1.ano - data2.ano;
+    }
+    if (data1.mes != data2.mes) {
+        return data1.mes - data2.mes;
+    }
+    return data1.dia - data2.dia;
+}

@@ -134,8 +134,6 @@ void excluirQuarto() {
 }
 
 Quarto obterQuartoPorNumero(int numero_quarto) {
-    // Supondo que você tenha uma lista de quartos, faça a busca pelo número do quarto
-    // Aqui, estou apenas criando um quarto fictício para ilustrar a ideia
     Quarto quarto;
     quarto.id_quarto = numero_quarto;
     quarto.camas_solteiro = 2;

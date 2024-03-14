@@ -3,16 +3,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include "funcoesHospedagem.h"
-#include "funcoesQuartos.h"
-#include "tempo.h"
 
-int codigo_reserva_global = 0;
+
+#define MAX_BUFFER_SIZE 256
 
 void iniciar_hospedagem() {
     int codigo_reserva;
     printf("Digite o código da reserva para iniciar a hospedagem: ");
     scanf("%d", &codigo_reserva);
-    codigo_reserva_global = codigo_reserva;
 
     // Abrir o arquivo de reservas em modo de leitura
     FILE *arquivo_reservas = fopen("reservas.csv", "r");
@@ -97,9 +95,6 @@ void carregarHospedagens() {
             char status[8];
             // Ler os valores da linha para as variáveis correspondentes
             sscanf(linha, "%d,%10[^,],%10[^,],%7s", &codigo_reserva, data_checkin, quarto, status);
-            // Exibir a hospedagem para fins de depuração
-            //("Reserva encontrada: %d, %s, %s, %s\n", codigo_reserva, data_checkin, quarto, status);
-            // Agora você pode fazer o que quiser com os dados da hospedagem, como armazená-los em um array
         }
         fclose(arquivo);
         printf("O arquivo hospedagens.csv já existe.\n");
@@ -115,67 +110,47 @@ void finalizar_hospedagem() {
 
     int opcao;
     printf("Escolha a opção para finalizar a hospedagem:\n");
-    printf("1. Pelo código do quarto\n");
-    printf("2. Pelo código da reserva\n");
+    printf("1. [INDISPONIVEL]Pelo código do quarto\n");
+    printf("2. [INDISPONIVEL]Pelo código da reserva\n");
     printf("Opção: ");
     scanf("%d", &opcao);
 
     if (opcao == 1) {
-        // Código para finalizar a hospedagem pelo número do quarto
-
+        // Implementação para finalizar hospedagem pelo número do quarto
     } else if (opcao == 2) {
         int codigo_reserva;
         printf("Digite o código da reserva: ");
         scanf("%d", &codigo_reserva);
 
-        codigo_reserva_global = codigo_reserva;
+        char linha[MAX_BUFFER_SIZE];
+        char temp_data_checkin[11], temp_quarto[10], temp_status[20];
+        int temp_codigo_reserva;
 
         // Procurar hospedagem pelo código da reserva
-        Hospedagem hospedagem;
-        int encontrou = 0;
-        while (fread(&hospedagem, sizeof(Hospedagem), 1, arquivo_hospedagens)) {
-            if (hospedagem.codigo_reserva == codigo_reserva && strcmp(hospedagem.status, "Ativa") == 0) {
-                encontrou = 1;
+        while (fgets(linha, sizeof(linha), arquivo_hospedagens) != NULL) {
+            sscanf(linha, "%d,%10[^,],%10[^,],%19[^,]", &temp_codigo_reserva, temp_data_checkin, temp_quarto, temp_status);
+
+            if (temp_codigo_reserva == codigo_reserva && strcmp(temp_status, "Ativa") == 0) {
+                // Encontrou a hospedagem ativa com o código de reserva especificado
+                printf("Hospedagem encontrada para o código de reserva %d.\n", codigo_reserva);
+
+                // Faça o que for necessário com os dados da hospedagem
+
                 break;
             }
-        }
-
-        if (encontrou) {
-            Quarto quarto = obterQuartoPorNumero(hospedagem.id_quarto);
-            if (quarto.preco_diaria == 0) {
-                printf("Valor da diária não encontrado para o quarto especificado.\n");
-                return;
-            }
-            DATA data_checkin_obj;
-            sscanf(hospedagem.data_checkin, "%d/%d/%d", &data_checkin_obj.dia, &data_checkin_obj.mes, &data_checkin_obj.ano);
-            DATA data_checkout_obj;
-            time_t rawtime;
-            struct tm *timeinfo;
-            time(&rawtime);
-            timeinfo = localtime(&rawtime);
-            data_checkout_obj.dia = timeinfo->tm_mday;
-            data_checkout_obj.mes = timeinfo->tm_mon + 1;
-            data_checkout_obj.ano = timeinfo->tm_year + 1900;
-            int numero_dias = calcularNumeroDias(data_checkin_obj, data_checkout_obj);
-            float valor_total = quarto.preco_diaria * numero_dias;
-
-            //Armazenar a data de check-out na hospedagem
-            strftime(hospedagem.data_checkout, sizeof(hospedagem.data_checkout), "%d/%m/%Y", timeinfo);
-
-            //Atualizar o status da hospedagem para "finalizada"
-            strcpy(hospedagem.status, "Finalizada");
-
-            //Voltar ao início do registro para sobrescrevê-lo no arquivo
-            fseek(arquivo_hospedagens, -sizeof(Hospedagem), SEEK_CUR);
-            fwrite(&hospedagem, sizeof(Hospedagem), 1, arquivo_hospedagens);
-
-            printf("Hospedagem finalizada com sucesso. Valor total: %.2f\n", valor_total);
-        } else {
-            printf("Nenhuma hospedagem ativa encontrada para o código de reserva especificado.\n");
         }
     } else {
         printf("Opção inválida.\n");
     }
 
     fclose(arquivo_hospedagens);
+}
+
+
+float calcular_valor_total_hospedagem(char *tipo_quarto, char *data_checkin) {
+    float preco_diaria = 100.0;
+    int numero_dias = 5;
+    float valor_total = preco_diaria * numero_dias;
+
+    return valor_total;
 }

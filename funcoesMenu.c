@@ -74,7 +74,6 @@ void menuReservas() {
         printf("2. Alterar Reserva\n");
         printf("3. Excluir Reserva\n");
         printf("4. Consultar Reservas de um Cliente\n");
-        printf("5. Verificar Disponibilidade de Quartos\n");
         printf("9. Voltar ao Menu Principal\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
@@ -91,26 +90,10 @@ void menuReservas() {
                 break;
             case 4:
             {
-                char cpf[14];
+                char cpf[15]; // Aumentando o tamanho para incluir o caractere de hífen
                 printf("Digite o CPF do cliente para consultar suas reservas (formato xxx.xxx.xxx-xx): ");
-                scanf("%13s", cpf);
+                scanf("%14s", cpf); // Ajustando o formato para incluir o hífen
                 consultarReservasCliente(cpf);
-            }
-                break;
-            case 5:
-            {
-                char tipo_quarto[10];
-                int dia_checkin, mes_checkin, ano_checkin;
-                int dia_checkout, mes_checkout, ano_checkout;
-                printf("Tipo de Quarto (Single, Duplo, Triplo): ");
-                scanf("%9s", tipo_quarto);
-                printf("Data de Check-in (dd mm aaaa): ");
-                scanf("%d %d %d", &dia_checkin, &mes_checkin, &ano_checkin);
-                printf("Data de Check-out (dd mm aaaa): ");
-                scanf("%d %d %d", &dia_checkout, &mes_checkout, &ano_checkout);
-                DATA checkin = {dia_checkin, mes_checkin, ano_checkin};
-                DATA checkout = {dia_checkout, mes_checkout, ano_checkout};
-                verificarDisponibilidadeQuarto(tipo_quarto, checkin, checkout);
             }
                 break;
             case 9:
@@ -127,7 +110,7 @@ void menuHospedagem() {
     do {
         printf("\nMenu Hospedagem\n");
         printf("1. Iniciar Hospedagem\n");
-        printf("2. Finalizar Hospedagem\n");
+        printf("2. [INDISPONIVEL] Finalizar Hospedagem\n");
         printf("9. Voltar ao Menu Principal\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);

@@ -18,10 +18,10 @@ typedef struct {
     char status[20];
 } Hospedagem;
 
-extern int codigo_reserva_global;
 
 void iniciar_hospedagem();
 void carregarHospedagens();
 void finalizar_hospedagem();
+float calcular_valor_total_hospedagem(char *tipo_quarto, char *data_checkin);
 
 #endif /* FUNCOESHOSPEDAGEM_H */

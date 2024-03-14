@@ -22,14 +22,18 @@ typedef struct {
 extern Reserva reservas[MAX_RESERVAS];
 extern int quantidade_reservas;
 
+Reserva *buscarReservaPorClienteEData(const char *cpf, DATA checkin);
+void cancelarReserva(Reserva *reserva);
+
 // Protótipo das funções
 void salvarReservas();
 void carregarReservas();
 void cadastrarReserva();
 void alterarReserva();
 void excluirReserva();
-void cancelarReservaPorClienteEData(const char *cpf, DATA checkin);
+void cancelarReservaPorClienteEData();
 void verificarDisponibilidadeQuarto(const char *tipo_quarto, DATA checkin, DATA checkout);
 void cancelarReservaPorClienteEDataF(const char *cpf, int dia_checkin, int mes_checkin, int ano_checkin);
-void consultarReservasCliente(const char *cpf);
+void consultarReservasCliente(char *cpf);
+int compararDatas(DATA data1, DATA data2);
 #endif /* FUNCOES_RESERVAS_H */
